@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: {{ include "nginx-web.fullname" . }}
+  labels:
+    {{- include "nginx-web.labels" . | nindent 4 }}
+{{ if .Values.deploy.annotations }}
+  annotations: 
+{{ toYaml .Values.deploy.annotations | indent 4 }}
+{{ end }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "nginx-web.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "nginx-web.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ include "nginx-web.name" . }}
+          image: {{ include "nginx-web.image" . }}
+          imagePullPolicy: {{ .Values.deploy.imagePullPolicy }}
+          ports:
+            - containerPort: {{ .Values.deploy.port }}
+          volumeMounts:
+            - mountPath: {{ .Values.volumes.html.mount }}
+              name: {{ .Values.volumes.html.name }}
+            - mountPath: {{ .Values.volumes.conf.mount }}
+              name: {{ .Values.volumes.conf.name }}
+      volumes:
+        - name: {{ .Values.volumes.html.name }}
+          configMap:
+            name: {{ .Values.volumes.html.config }}
+        - name: {{ .Values.volumes.conf.name }}
+          configMap:
+            name: {{ .Values.volumes.conf.config }}

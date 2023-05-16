@@ -1,0 +1,39 @@
+# Global overrides
+namespace: nginx-web
+nameOverride: ""
+fullNameOverride: ""
+
+deploy:
+  name: ""
+  annotations: {}
+
+  port: 80
+    
+  imageRepo: nginx
+  imageTag: latest
+  imageDigest: ""
+  imagePullPolicy: IfNotPresent
+
+volumes:
+  html:
+    name: nginx-html-storage
+    mount: /usr/share/nginx/html
+    config: nginx-html-config
+  conf:
+    name: nginx-conf-storage
+    mount: /etc/nginx/conf.d
+    config: nginx-config
+
+service:
+  name: ""
+  annotations: {}
+
+  http:
+    enable: true
+    port: 80
+
+ingress:
+  name: main-site
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+

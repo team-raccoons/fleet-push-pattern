@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: {{ include "nginx-web.fullname" . }}
+  labels:
+    {{- include "nginx-web.labels" . | nindent 4 }}
+{{ if .Values.deploy.annotations }}
+  annotations: 
+{{ toYaml .Values.deploy.annotations | indent 4 }}
+{{ end }}
+spec:
+  selector:
+    {{- include "nginx-web.selectorLabels" . | nindent 4 }}
+  ports:
+{{- if .Values.service.http.enable }}
+  - name: http
+    protocol: TCP
+    port: {{ .Values.service.http.port }}
+    targetPort: 80
+{{- end }}

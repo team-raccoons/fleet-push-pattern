@@ -1,0 +1,16 @@
+kind: GitRepo
+apiVersion: fleet.cattle.io/v1alpha1
+metadata:
+  name: nginx-web-conf
+  namespace: raccoon-army
+spec:
+  repo: https://github.com/BelKirill/nginx
+  branch: main
+  paths:
+  - conf
+  targets:
+  - name: aws
+    clusterSelector:
+      matchLabels:
+        env: aws
+

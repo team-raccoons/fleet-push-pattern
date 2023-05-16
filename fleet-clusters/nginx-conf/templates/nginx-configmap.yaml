@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: {{ .Values.config.html.name }}
+  labels:
+    {{- include "nginx-web.labels" . | nindent 4 }}
+{{- if .Values.config.html.annotations }}
+  annotations:
+{{ toYaml .Values.config.annotations | indent 4 }}
+{{- end }}
+data:
+{{ (.Files.Glob "html/*").AsConfig | indent 2 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: {{ .Values.config.conf.name }}
+  labels:
+    {{- include "nginx-web.labels" . | nindent 4 }}
+{{- if .Values.config.conf.annotations }}
+  annotations:
+{{ toYaml .Values.config.annotations | indent 4 }}
+{{- end }}
+data:
+{{ (.Files.Glob "conf/conf.d/*").AsConfig | indent 2 }}

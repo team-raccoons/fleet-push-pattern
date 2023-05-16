@@ -1,0 +1,16 @@
+apiVersion: v2
+
+name: nginx-web-conf
+description: NGINX web-server configuration and content
+type: application
+keywords:
+- nginx
+- conf
+
+maintainers:
+- email: gil.blinov@gmail.com
+  name: Gil Blinov
+sources:
+- https://github.com/BelKirill/nginx/conf
+
+version: 0.1.0

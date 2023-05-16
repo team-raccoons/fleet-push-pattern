@@ -1,0 +1,16 @@
+apiVersion: v2
+
+name: nginx
+description: NGINX web-server
+type: application
+appVersion: 3.1.1
+keywords:
+- nginx
+
+maintainers:
+- email: gil.blinov@gmail.com
+  name: Gil Blinov
+sources:
+- https://github.com/BelKirill/nginx/nginx-helm
+
+version: 0.1.0
