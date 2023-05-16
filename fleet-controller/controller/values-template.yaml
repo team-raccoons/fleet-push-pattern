@@ -1,0 +1,9 @@
+labels:
+  env: 
+  location: 
+  raccoons: true
+apiServerCA: ""
+apiServerURL: ""
+clusterNamespace: raccoon-army
+systemRegistrationNamespace: cattle-fleet-clusters-system
+token: 
